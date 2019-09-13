@@ -1,0 +1,184 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    
+    <CheckButton name="TeamInventory_CheckButtonTemplate" virtual="true"
+            inherits="OptionsCheckButtonTemplate" checked="true" >
+        <Size x="20" y="20" />
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="$parentText" inherits="GameFontNormalSmall">
+                    <Color r="1.0" g="1.0" b="1.0" />
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-2" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </CheckButton>
+
+    <Frame name="TeamInventory_SubframeTemplate" virtual="true">
+        <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+            <EdgeSize><AbsValue val="16"/></EdgeSize>
+            <TileSize><AbsValue val="16"/></TileSize>
+        </Backdrop>
+    </Frame>
+    
+    <Frame name="TeamInventory_TypeFrameTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString inherits="GameFontNormal" text="Item types:">
+                    <Color r="1.0" g="1.0" b="1.0" />
+                    <Anchors>
+                        <Anchor point="TOPLEFT"><Offset x="0" y="0"/></Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="TeamInventory_TeamFrameTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString inherits="GameFontNormal" text="Show inventory of:">
+                    <Color r="1.0" g="1.0" b="1.0" />
+                    <Anchors>
+                        <Anchor point="TOPLEFT"><Offset x="0" y="0"/></Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="TeamInventory_Frame" movable="yes" enableMouse="true" 
+                hidden="true" parent="UIParent">
+        <Size x="740" y="450" />
+        <Anchors><Anchor point="CENTER" /></Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" 
+                    edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="11" top="12" bottom="10"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture name="OptionsFrameHeader" 
+                        file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size x="256" y="64"/>
+                    <Anchors>
+                        <Anchor point="TOP"><Offset x="0" y="12"/></Anchor>
+                    </Anchors>
+                </Texture>
+                <FontString inherits="GameFontNormal" text="Team Inventory">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+ 
+        <Frames>
+            <Frame name="TeamInventory_FiltersFrame" 
+                    inherits="TeamInventory_SubframeTemplate">
+                <Size x="165" y="350" />
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="20" y="-40" />
+                    </Anchor>
+                </Anchors>
+                <Frames>
+                    <Frame name="TeamInventory_TypeFrame"
+                            inherits="TeamInventory_TypeFrameTemplate">
+                        <Size x="150" y="200" />
+                        <Anchors>
+                            <Anchor point="TOPLEFT"><Offset x="10" y="-10"/></Anchor>
+                        </Anchors>
+                    </Frame>
+                    <Frame name="TeamInventory_TeamFrame"
+                            inherits="TeamInventory_TeamFrameTemplate">
+                        <Size x="150" y="200" />
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="TeamInventory_TypeFrame"
+                                    relativePoint="BOTTOMLEFT">
+                                <Offset x="10" y="-10" />
+                            </Anchor>
+                        </Anchors>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+            <Frame name="TeamInventory_ItemFrameContainer"
+                        inherits="TeamInventory_SubframeTemplate">
+                <Size x="515" y="350" />
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset x="-20" y="-40" />
+                    </Anchor>
+                </Anchors>
+                <Frames>
+                    <ScrollFrame name="TeamInventory_ItemFrame"
+                            inherits="UIPanelScrollFrameTemplate">
+                        <Size x="482" y="344" />
+                        <Anchors>
+                            <Anchor point="TOPRIGHT">
+                                <Offset x="-26" y="-3" />
+                            </Anchor>
+                        </Anchors>
+                        <ScrollChild>
+                            <Frame name="TeamInventory_ItemsFrame" 
+                                    inherits="TeamInventory_ItemsFrameTemplate">
+                                <Size x="456" y="38" />
+                                <Anchors><Anchor point="TOPRIGHT" /></Anchors>
+                            </Frame>
+                        </ScrollChild>
+                    </ScrollFrame>
+                </Frames>
+            </Frame>
+
+            <Button name="TeamInventory_CloseButton" text="Close"
+                    inherits="OptionsButtonTemplate">
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT">
+                        <Offset x="-20" y="20" />
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        TeamInventory_Frame:Hide()
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+
+        <Scripts>
+            <OnLoad>
+                self:RegisterForDrag('LeftButton')
+                self.TimeSinceLastUpdate = 0;
+            </OnLoad>
+            <OnDragStart>
+                self:StartMoving()
+                self.isMoving = true
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+                self,isMoving = false
+            </OnDragStop>
+            <OnUpdate>
+                TeamInventory:OnUpdate(self, elapsed)
+            </OnUpdate>
+            <OnShow>
+                TeamInventory:OnShow ()
+            </OnShow>
+        </Scripts>
+    </Frame>
+</Ui>

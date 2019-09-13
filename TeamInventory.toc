@@ -1,0 +1,17 @@
+## Interface: 30000
+## Title: Team Inventory
+## Notes: Shows the complete inventory of your Jamba Team and makes it tradable.
+## SavedVariables: TeamInventoryDB
+## Author: Blubber, Tora
+## Version: 0.1
+## X-Email: t.kieft@gmail.com, tora@warlock.ai
+## X-Curse-Packaged-Version: 0.1beta2
+## X-Curse-Project-Name: TeamInventory
+## X-Curse-Project-ID: teaminventory
+## X-Curse-Repository-ID: wow/teaminventory/mainline
+
+embeds.xml
+
+Frame.xml
+
+Core.lua
