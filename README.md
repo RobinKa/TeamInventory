@@ -1,7 +1,7 @@
 ![](teaminventory.png)
 
 # TeamInventory
-AddOn originally created by [Blubber](https://www.dual-boxing.com/members/5107-Blubber) compatible with World of Warcraft Classic that shows the inventory of anyone in your party as long as they also have the addon.
+AddOn originally created by [Blubber](https://github.com/blubber) compatible with World of Warcraft Classic that shows the inventory of anyone in your party as long as they also have the addon.
 
 # Features
 - Display inventory of your party (if addon is installed)
